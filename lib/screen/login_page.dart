@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:admin_app/api_service/custom_api.dart';
-import 'package:admin_app/screen/home_page.dart';
+import 'package:admin_app/screen/bottom_nav/bottom_nav.dart';
 import 'package:admin_app/widget/const.dart';
 import 'package:admin_app/widget/custom_text_field.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -21,7 +21,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-   
     isLogin();
     super.initState();
   }
@@ -29,8 +28,8 @@ class _LoginPageState extends State<LoginPage> {
   isLogin() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     if (sharedPreferences.getString("token") != null) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (context) =>const HomePage()));
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => BottomNavPage()));
     }
   }
 
@@ -48,20 +47,27 @@ class _LoginPageState extends State<LoginPage> {
       });
       final data = jsonDecode(result);
       if (data["access_token"] != null) {
-        
         setState(() {
           sharedPreferences.setString("token", data["access_token"]);
           sharedPreferences.setString("email", emailController.text);
-          print("my token save ${sharedPreferences.getString("token")}");
+          print("my token save${sharedPreferences.getString("token")}");
         });
         Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const  HomePage()));
+            MaterialPageRoute(builder: (context) => BottomNavPage()));
       }
-       
-      print("user response  data $data");
+
+      print("TTTTTTTTTTTTTTTT$data");
     } catch (e) {
       print("$e");
     }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -73,15 +79,15 @@ class _LoginPageState extends State<LoginPage> {
         blur: 1,
         opacity: 0.5,
 
-        progressIndicator: const CircularProgressIndicator(),
+        progressIndicator: CircularProgressIndicator(),
         child: Container(
           width: double.infinity,
-          padding: const EdgeInsets.all(22),
+          padding: EdgeInsets.all(22),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Login  With Email",
+                "Login  Koro",
                 style: myStyle(
                   25,
                   Colors.pink,
@@ -101,7 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () {
                     getLogin();
                   },
-                  child: const Text("Submit"))
+                  child: Text("Submit"))
             ],
           ),
         ),

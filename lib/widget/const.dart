@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,7 +10,7 @@ String baseUrl = "https://apihomechef.antopolis.xyz/";
 
 showInToast(String title) {
   return Fluttertoast.showToast(
-      msg: "$title",
+      msg: title,
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.CENTER,
       timeInSecForIosWeb: 1,
